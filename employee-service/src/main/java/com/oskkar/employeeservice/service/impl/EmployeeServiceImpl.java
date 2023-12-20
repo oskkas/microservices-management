@@ -6,17 +6,17 @@ import com.oskkar.employeeservice.dto.EmployeeDto;
 import com.oskkar.employeeservice.entity.Employee;
 import com.oskkar.employeeservice.mapper.EmployeeMapper;
 import com.oskkar.employeeservice.repository.EmployeeRepository;
+import com.oskkar.employeeservice.service.APIClient;
 import com.oskkar.employeeservice.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
 @AllArgsConstructor
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
-    private WebClient webClient;
+    private APIClient apiClient;
 
     @Override
     public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
@@ -29,10 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public APIRestDto findById(Integer id) {
         Employee employee = employeeRepository.findById(id).get();
         EmployeeDto employeeDto = EmployeeMapper.MAPPER.toEmployeeDto(employee);
-        DepartmentDto departmentDto = webClient.get().uri("http://localhost:8080/departments/" + employee.getDepartmentCode())
-                .retrieve()
-                .bodyToMono(DepartmentDto.class)
-                .block();
+        DepartmentDto departmentDto = apiClient.findDepartmentByCode(employee.getDepartmentCode());
 
         APIRestDto apiRestDto = new APIRestDto();
         apiRestDto.setEmployeeDto(employeeDto);
