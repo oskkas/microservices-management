@@ -1,5 +1,6 @@
 package com.oskkar.employeeservice.controller;
 
+import com.oskkar.employeeservice.dto.APIRestDto;
 import com.oskkar.employeeservice.dto.EmployeeDto;
 import com.oskkar.employeeservice.service.EmployeeService;
 import lombok.AllArgsConstructor;
@@ -20,8 +21,8 @@ public class EmployeeController {
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDto> findEmployeeById(@PathVariable Integer id) {
-        EmployeeDto employee = employeeService.findById(id);
-        return new ResponseEntity<>(employee, HttpStatus.OK);
+    public ResponseEntity<APIRestDto> findEmployeeById(@PathVariable Integer id) {
+        APIRestDto apiRestDto = employeeService.findById(id);
+        return new ResponseEntity<>(apiRestDto, HttpStatus.OK);
     }
 }

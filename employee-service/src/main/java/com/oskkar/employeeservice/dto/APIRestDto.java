@@ -9,10 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class EmployeeDto {
-    private Integer id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String departmentCode;
+public class APIRestDto {
+    EmployeeDto employeeDto;
+    DepartmentDto departmentDto;
 }
